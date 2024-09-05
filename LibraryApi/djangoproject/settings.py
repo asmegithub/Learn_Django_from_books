@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-9fc!*6l8vzt*)@$rhwa7cvz3pib!!&!idf4n+jqcwlwcwb!r1o
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [".herokuapp.com", "localhost", "127.0.0.1"]
 
 
 # Application definition
@@ -36,13 +36,22 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+
     'django.contrib.staticfiles',
-    'book'
+    # 3rd party apps
+    'rest_framework',
+    # local apps
+    'book',
+    'apis',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    # whitenoise middleware
+    "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
+    # whitenose middleware should be above CommonMiddleware
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -117,6 +126,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
+
+# white noise configuration for deploying static files
+STATICFILES_DIRS = [BASE_DIR / "static"]  # new
+STATIC_ROOT = BASE_DIR / "staticfiles"  # new
+# according to the white noise documentation only the line below is needed, but the book ordered me to add all new lines
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

@@ -11,6 +11,7 @@ class BookListViewTest(TestCase):
             title="A good title",
             author="Tom Christie",
             publication_date="2021-01-01",
+            # ISBN="1234567890123",
         )
 
     def test_book_content(self):
@@ -22,4 +23,4 @@ class BookListViewTest(TestCase):
         response = self.client.get(reverse("home"))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Tom Christie")
-        self.assertTemplateUsed(response, "books/book_list.html")
+        self.assertTemplateUsed(response, "book/book_list.html")
